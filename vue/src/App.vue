@@ -1,23 +1,23 @@
 <template>
   <div id="app">
-    <Header />
+    <HeaderWeb />
     <SidebarMenu />
     <router-view /> <!-- This will render the component for the current route -->
-    <Footer />
+    <FooterWeb />
   </div>
 </template>
 
 <script>
-import Header from './components/Header.vue';
+import HeaderWeb from './components/Header.vue';
 import SidebarMenu from './components/SidebarMenu.vue';
-import Footer from './components/Footer.vue';
+import FooterWeb from './components/Footer.vue';
 
 export default {
   name: 'App',
   components: {
-    Header,
+    HeaderWeb,
     SidebarMenu,
-    Footer
+    FooterWeb
   }
 };
 </script>
