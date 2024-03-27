@@ -10,16 +10,16 @@
 </template>
 
 <script>
-import Header from '@/components/Header.vue';
-import Footer from '@/components/Footer.vue';
-import SidebarMenu from '@/components/SidebarMenu.vue';
+//import HeaderWeb from '@/components/Header.vue';
+//import FooterWeb from '@/components/Footer.vue';
+//import SidebarMenu from '@/components/SidebarMenu.vue';
 import CalculatorPage from '@/components/CalculatorPage.vue';
 
 export default {
   components: {
-    Header,
-    Footer,
-    SidebarMenu,
+    //HeaderWeb,
+   // FooterWeb,
+   // SidebarMenu,
     CalculatorPage
   }
 };

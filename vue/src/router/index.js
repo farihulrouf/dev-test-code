@@ -1,8 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Dashboard from '../views/Dashboard'
-import DataTable from '../views/DataTable.vue';
-import Calculator from '../views/Calculator.vue';
-import Map from '../views/Map.vue';
+//import Dashboard from '../views/Dashboard.vue';
+//import Dashboard from '../views/Dashboard.vue';
+
+import Dashboard from '../views/DashboardView.vue'
+import DataTable from '../views/DataTablePage.vue';
+import Calculator from '../views/CalculatorView.vue';
+import Map from '../views/MapView.vue';
 
 const routes = [
   { path: '/dashboard', component: Dashboard },

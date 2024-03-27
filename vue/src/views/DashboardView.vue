@@ -10,16 +10,16 @@
   </template>
   
   <script>
-  import Header from '@/components/Header.vue';
-  import Footer from '@/components/Footer.vue';
+  //import Header from '@/components/Header.vue';
+ // import Footer from '@/components/Footer.vue';
   import SidebarMenu from '@/components/SidebarMenu.vue';
   import DashboardView from '@/views/DashboardView.vue'; // Import the DashboardView component
   
   export default {
     name: 'DashboardPage',
     components: {
-      Header,
-      Footer,
+      //Header,
+     // Footer,
       SidebarMenu,
       DashboardView // Add the DashboardView component to the components object
     }
