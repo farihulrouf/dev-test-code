@@ -115,26 +115,117 @@ func generateJSON(name []string, age []int, hobby []string) {
 	}
 }
 
+
+
+//number five A
+func displayBarChart(data []int) {
+	maxValue := findMax(data)
+
+	for i := maxValue; i > 0; i-- {
+		line := ""
+		for _, value := range data {
+			if value >= i {
+				line += "| "
+			} else {
+				line += "  "
+			}
+		}
+		fmt.Println(line)
+	}
+
+	// Horizontal axis with data values
+	fmt.Println(data)
+}
+
+//number five A
+func findMax(data []int) int {
+	max := data[0]
+	for _, value := range data {
+		if value > max {
+			max = value
+		}
+	}
+	return max
+}
+
+
+
+
+//number five B
+
+
+func displayBarChartB(data []int) {
+	maxValue := findMax(data)
+
+	for i := maxValue; i > 0; i-- {
+		line := ""
+		for _, value := range data {
+			if value >= i {
+				line += "| "
+			} else {
+				line += "  "
+			}
+		}
+		fmt.Println(line)
+	}
+
+	// Horizontal axis with data values
+	fmt.Println(data)
+}
+
+//number five B
+
+func findMaxB(data []int) int {
+	max := data[0]
+	for _, value := range data {
+		if value > max {
+			max = value
+		}
+	}
+	return max
+}
+
+func insertionSort(data []int) {
+	for i := 1; i < len(data); i++ {
+		key := data[i]
+		j := i - 1
+		for j >= 0 && data[j] > key {
+			data[j+1] = data[j]
+			j = j - 1
+		}
+		data[j+1] = key
+
+		// Display visualization step
+		displayBarChart(data)
+		fmt.Println()
+	}
+}
+
+
 func main() {
     inputString := "1AB23C5678D"
 
-    // A.
+    // number 1A.
     resultA := stringToArray(inputString)
     fmt.Println("Result A:", resultA)
 
-    // B.
+    // number 1B.
     resultB := stringToIntArray(inputString)
     fmt.Println("Result B:", resultB)
 
-    // C.
+    // number 1C.
     resultC := stringToCharArray(inputString)
     fmt.Println("Result C:", resultC)
+   
 
+    //Number 2
 
     input := "5+5+5*5:5"
     fmt.Println(calculator(input))
 
 
+
+    //answer number 3
     // Define arrays
 	names := []string{"brian", "habib", "malik"}
 	ages := []int{25, 25, 24}
@@ -142,4 +233,26 @@ func main() {
 
 	// Call function to generate JSON for each person
 	generateJSON(names, ages, hobbies)
+
+
+    //number five a
+    // Input array
+	data := []int{1, 4, 5, 6, 8, 2}
+
+	// Displaying vertical bar chart
+	displayBarChart(data)
+
+
+
+    //answer number five B
+    datab := []int{1, 4, 5, 6, 8, 2}
+
+	// Display original array
+	fmt.Println("Original array:")
+	displayBarChartB(datab)
+	fmt.Println()
+
+	// Sorting array using insertion sort with visualization steps
+	fmt.Println("Sorting using Insertion Sort with visualization steps:")
+	insertionSort(datab)
 }
