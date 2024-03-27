@@ -5,6 +5,7 @@
 
     <!-- Main content -->
     <MainContent />
+    
   </div>
 </template>
 
@@ -15,7 +16,8 @@ import MainContent from './MainContent.vue';
 export default {
   components: {
     Sidebar,
-    MainContent
+    MainContent,
+  
   }
 };
 </script>
