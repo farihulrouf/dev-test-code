@@ -1,11 +1,15 @@
-// router/index.js
-
 import { createRouter, createWebHistory } from 'vue-router';
 import DataTable from '../views/DataTable.vue';
 import Calculator from '../views/Calculator.vue';
-import MapPreview from '../components/Map.vue'; // Import the MapPreview component
+import MapPreview from '../components/Map.vue';
+import Login from '../views/LoginPage.vue'; // Import the Login component
 
 const routes = [
+  {
+    path: '/login', // Define the route for the login page
+    name: 'Login',
+    component: Login
+  },
   {
     path: '/data-table',
     name: 'DataTable',
@@ -17,7 +21,7 @@ const routes = [
     component: Calculator
   },
   {
-    path: '/map', // Define the route for the map
+    path: '/map',
     name: 'MapPreview',
     component: MapPreview
   },
