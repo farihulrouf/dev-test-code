@@ -60,7 +60,7 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const response = await fetch('https://api.example.com/data'); // Replace with actual API endpoint
+        const response = await fetch('https://api-production.data.gov.sg/v2/public/api/collections'); // Replace with actual API endpoint
         const data = await response.json();
         this.items = data; // Update items array with fetched data
       } catch (error) {

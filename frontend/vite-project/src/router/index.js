@@ -1,6 +1,9 @@
+// router/index.js
+
 import { createRouter, createWebHistory } from 'vue-router';
 import DataTable from '../views/DataTable.vue';
-import Calculator from '../views/Calculator.vue'; // Import the Calculator component
+import Calculator from '../views/Calculator.vue';
+import MapPreview from '../components/Map.vue'; // Import the MapPreview component
 
 const routes = [
   {
@@ -9,9 +12,14 @@ const routes = [
     component: DataTable
   },
   {
-    path: '/calculator', // Define the route for the calculator
+    path: '/calculator',
     name: 'Calculator',
     component: Calculator
+  },
+  {
+    path: '/map', // Define the route for the map
+    name: 'MapPreview',
+    component: MapPreview
   },
   // Other routes...
 ];
