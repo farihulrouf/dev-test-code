@@ -4,6 +4,14 @@ import (
     "fmt"
     "strconv"
     "strings"
+	"encoding/csv"
+	"encoding/json"
+	"flag"
+	"log"
+	"net/http"
+	"os"
+	"strconv"
+	"sync"
 )
 
 // A. Convert string to array of strings
@@ -114,6 +122,115 @@ func generateJSON(name []string, age []int, hobby []string) {
 		}
 	}
 }
+
+//Number four 
+
+// GraduatesResponse represents the structure of the response from the API
+type GraduatesResponse struct {
+	Year  int    `json:"year"`
+	Major string `json:"major"`
+	Count int    `json:"count"`
+}
+
+var (
+	concurrentLimit = flag.Int("concurrent_limit", 2, "concurrent limit for fetching data")
+	outputDir       = flag.String("output", "./csv", "output directory for CSV files")
+)
+
+
+func fetchData(url string) ([]GraduatesResponse, error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var graduates []GraduatesResponse
+	err = json.NewDecoder(resp.Body).Decode(&graduates)
+	if err != nil {
+		return nil, err
+	}
+
+	return graduates, nil
+}
+
+func processData(graduates []GraduatesResponse) {
+	// Initialize channels for processing
+	input := make(chan GraduatesResponse, len(graduates))
+	output := make(chan map[string]string, len(graduates))
+	done := make(chan bool)
+
+	// Start workers
+	var wg sync.WaitGroup
+	for i := 0; i < *concurrentLimit; i++ {
+		wg.Add(1)
+		go worker(input, output, &wg)
+	}
+
+	// Feed data to input channel
+	go func() {
+		for _, grad := range graduates {
+			input <- grad
+		}
+		close(input)
+	}()
+
+	// Collect results from output channel
+	go func() {
+		wg.Wait()
+		close(output)
+		done <- true
+	}()
+
+	// Process results and save to CSV files
+	for result := range output {
+		saveToCSV(result)
+	}
+
+	<-done
+}
+
+func worker(input <-chan GraduatesResponse, output chan<- map[string]string, wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	for grad := range input {
+		// Process data
+		result := map[string]string{
+			"year":  strconv.Itoa(grad.Year),
+			"major": hash(grad.Major),
+			"count": strconv.Itoa(grad.Count),
+		}
+
+		// Send result to output channel
+		output <- result
+	}
+}
+
+func hash(s string) string {
+	// Simple hash function, just for demonstration
+	return strconv.Itoa(len(s))
+}
+
+func saveToCSV(data map[string]string) {
+	year, _ := strconv.Atoi(data["year"])
+	count, _ := strconv.Atoi(data["count"])
+
+	filename := fmt.Sprintf("%s/%d.csv", *outputDir, year)
+	file, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Println("Error opening file:", err)
+		return
+	}
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	if err := writer.Write([]string{data["year"], data["major"], strconv.Itoa(count)}); err != nil {
+		log.Println("Error writing to CSV:", err)
+	}
+}
+//end function number four
 
 
 
@@ -233,6 +350,26 @@ func main() {
 
 	// Call function to generate JSON for each person
 	generateJSON(names, ages, hobbies)
+
+
+
+	//call function number four 
+	flag.Parse()
+
+	// Create the output directory if it doesn't exist
+	if err := os.MkdirAll(*outputDir, os.ModePerm); err != nil {
+		log.Fatal("Error creating output directory:", err)
+	}
+
+	graduates, err := fetchData("https://api.data.gov.sg/v1/graduates")
+	if err != nil {
+		log.Fatal("Error fetching data from API:", err)
+	}
+
+	processData(graduates)
+
+	//end number four
+
 
 
     //number five a
